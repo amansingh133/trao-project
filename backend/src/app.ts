@@ -10,6 +10,7 @@ import {
   notFoundHandler,
 } from "./shared/middlewares/errorHandler.middleware.js";
 import { apiRateLimiter } from "./shared/middlewares/rateLimiter.middleware.js";
+import { router } from "./routes.js";
 
 export function createApp(): Application {
   const app = express();
@@ -31,6 +32,8 @@ export function createApp(): Application {
   app.get("/api/v1/health", (_req, res) => {
     res.status(200).json({ status: "ok" });
   });
+
+  app.use("/api/v1", router);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
